@@ -1,0 +1,478 @@
+* {
+  box-sizing: border-box;
+}
+
+.ang-page {
+  position: relative;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #fdf6f8 0%, #F8F9FA 45%);
+  font-family: 'Poppins', sans-serif;
+  overflow-x: hidden;
+  padding: 40px 20px 60px;
+}
+
+.ang-wrap {
+  max-width: 640px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+/* Dekorasi blob background */
+.ang-blob {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(60px);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.ang-blob-1 {
+  width: 360px;
+  height: 360px;
+  background: rgba(128, 0, 32, 0.12);
+  top: -120px;
+  right: -100px;
+}
+
+.ang-blob-2 {
+  width: 300px;
+  height: 300px;
+  background: rgba(212, 175, 55, 0.15);
+  bottom: -100px;
+  left: -100px;
+}
+
+/* ===== Topbar ===== */
+.ang-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 22px;
+}
+
+.ang-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #b8869a;
+  margin-bottom: 4px;
+}
+
+.ang-topbar h2 {
+  font-size: 22px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #800020, #a8003a);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin: 0;
+}
+
+.ang-logout {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  background: #fff;
+  border: 1.5px solid #fbdada;
+  color: #E5484D;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+  text-decoration: none;
+  box-shadow: 0 8px 20px rgba(229, 72, 77, 0.12);
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.ang-logout:hover {
+  background: #fdeaea;
+  transform: translateY(-2px);
+}
+
+/* ===== Kartu ID Digital ===== */
+.ang-id-card {
+  position: relative;
+  background: linear-gradient(135deg, #800020 0%, #5A0018 55%, #3d000f 100%);
+  border-radius: 26px;
+  padding: 26px 26px 22px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  box-shadow: 0 24px 50px rgba(90, 0, 24, 0.35);
+}
+
+.ang-id-pattern {
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    115deg,
+    rgba(255,255,255,0.04) 0px,
+    rgba(255,255,255,0.04) 2px,
+    transparent 2px,
+    transparent 14px
+  );
+  pointer-events: none;
+}
+
+.ang-id-crown {
+  position: absolute;
+  top: -18px;
+  right: -14px;
+  font-size: 130px;
+  color: rgba(212, 175, 55, 0.12);
+  transform: rotate(18deg);
+  pointer-events: none;
+}
+
+.ang-id-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  z-index: 2;
+  margin-bottom: 26px;
+}
+
+.ang-id-avatar {
+  width: 54px;
+  height: 54px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #D4AF37, #eccb63);
+  color: #5A0018;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 17px;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.25);
+}
+
+.ang-id-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  color: #f4e3ab;
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 7px 14px;
+  border-radius: 999px;
+}
+
+.ang-id-bottom {
+  position: relative;
+  z-index: 2;
+}
+
+.ang-id-label {
+  display: block;
+  font-size: 10.5px;
+  color: rgba(255,255,255,0.55);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.ang-id-bottom h3 {
+  color: #fff;
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 8px;
+}
+
+.ang-id-member {
+  font-size: 11px;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 0.03em;
+}
+
+/* ===== Stats ===== */
+.ang-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.ang-stat {
+  background: #fff;
+  border-radius: 18px;
+  padding: 16px 14px;
+  box-shadow: 0 10px 30px rgba(128, 0, 32, 0.08);
+  border: 1px solid #f5eef0;
+  transition: all 0.25s ease;
+}
+
+.ang-stat:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 36px rgba(128, 0, 32, 0.14);
+}
+
+.ang-stat-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  margin-bottom: 10px;
+}
+
+.ang-stat-icon.maroon { background: linear-gradient(135deg, #f4e6ea, #f0d9e0); color: #800020; }
+.ang-stat-icon.green { background: linear-gradient(135deg, #e2f7ec, #cdefdc); color: #1DAA61; }
+.ang-stat-icon.gold { background: linear-gradient(135deg, #faf3dd, #f5e9c2); color: #a5820f; }
+
+.ang-stat .label {
+  font-size: 10.5px;
+  color: #8a8a92;
+  margin-bottom: 5px;
+}
+
+.ang-stat .value {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1F2937;
+}
+
+.ang-stat .value.green-text { color: #1DAA61; }
+
+/* ===== Panel ===== */
+.ang-panel {
+  background: #fff;
+  border-radius: 22px;
+  padding: 22px;
+  box-shadow: 0 10px 30px rgba(128, 0, 32, 0.08);
+  border: 1px solid #f5eef0;
+  margin-bottom: 16px;
+}
+
+.ang-panel h3 {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #1F2937;
+  margin: 0 0 16px;
+}
+
+/* ===== Timeline ===== */
+.timeline-item {
+  display: flex;
+  gap: 14px;
+  padding-bottom: 20px;
+  position: relative;
+}
+
+.timeline-item:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  left: 13px;
+  top: 28px;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, #D4AF37, #f0e3c0);
+}
+
+.timeline-item .dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #D4AF37, #eccb63);
+  color: #5A0018;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 5px #faf3dd;
+}
+
+.timeline-content {
+  padding-top: 3px;
+}
+
+.t-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #1F2937;
+}
+
+.t-sub {
+  font-size: 11.5px;
+  color: #8a8a92;
+  margin-top: 3px;
+}
+
+/* ===== Acara Terdekat ===== */
+.ang-events {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ang-event-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px;
+  border-radius: 16px;
+  background: #fbfbfc;
+  border: 1px solid #f4f2f3;
+  transition: all 0.2s ease;
+}
+
+.ang-event-card:hover {
+  background: #faf3f5;
+  transform: translateY(-2px);
+}
+
+.ang-event-date {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #800020, #a8003a);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.ang-event-date .d { font-size: 15px; line-height: 1; }
+.ang-event-date .m { font-size: 9px; text-transform: uppercase; opacity: 0.85; }
+
+.ang-event-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.ang-event-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1F2937;
+}
+
+.ang-event-loc {
+  font-size: 11px;
+  color: #8a8a92;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 480px) {
+  .ang-page {
+    padding: 24px 14px 40px;
+  }
+
+  .ang-topbar h2 {
+    font-size: 18px;
+  }
+
+  .ang-id-card {
+    padding: 20px;
+  }
+
+  .ang-id-bottom h3 {
+    font-size: 17px;
+  }
+
+  .ang-stats {
+    gap: 8px;
+  }
+
+  .ang-stat {
+    padding: 12px 10px;
+  }
+
+  .ang-stat .value {
+    font-size: 12.5px;
+  }
+
+  .ang-panel {
+    padding: 18px;
+  }
+}
+
+@media (max-width: 360px) {
+  .ang-stats {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* ===== Filter Bulan Riwayat ===== */
+.ang-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.ang-panel-head h3 {
+  margin: 0;
+}
+
+.ang-bulan-select {
+  padding: 9px 14px;
+  border-radius: 12px;
+  border: 1.5px solid #f4e6ea;
+  background: #fbfbfc;
+  font-family: inherit;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #800020;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ang-bulan-select:focus {
+  border-color: #D4AF37;
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
+}
+
+.ang-empty {
+  font-size: 12px;
+  color: #8a8a92;
+  text-align: center;
+  padding: 20px 0;
+}
+
+/* ===== Total per bulan (rekap mingguan) ===== */
+.ang-total-bulan {
+  background: linear-gradient(135deg, #faf3f5, #fdf6f8);
+  border: 1px solid #f4e6ea;
+  border-radius: 14px;
+  padding: 12px 16px;
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 16px;
+}
+
+.ang-total-bulan b {
+  color: #800020;
+  font-size: 13.5px;
+}
+
+.ang-total-count {
+  display: block;
+  font-size: 10.5px;
+  color: #8a8a92;
+  margin-top: 2px;
+}
+
+/* ===== Reset tombol logout jadi <button> ===== */
+.ang-logout {
+  font-family: inherit;
+  cursor: pointer;
+}

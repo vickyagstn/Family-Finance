@@ -1,0 +1,129 @@
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  font-family: 'Poppins', sans-serif;
+}
+
+.login-card {
+  width: 380px;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 20px 50px rgba(128, 0, 32, 0.12);
+  padding: 40px 34px;
+}
+
+.login-card h1 {
+  color: #800020;
+  font-size: 22px;
+  margin-bottom: 8px;
+}
+
+.login-card p {
+  color: #8a8a92;
+  font-size: 13px;
+  margin-bottom: 24px;
+}
+
+.field {
+  margin-bottom: 16px;
+  text-align: left;
+}
+
+.field label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.field input {
+  width: 100%;
+  padding: 13px 16px;
+  border-radius: 14px;
+  border: 1.5px solid #ecebee;
+  background: #fbfbfc;
+  font-size: 13.5px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.field input:focus {
+  border-color: #D4AF37;
+  background: #fff;
+}
+
+.row-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 14px 0 22px;
+  font-size: 12.5px;
+}
+
+.remember {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #8a8a92;
+}
+
+.row-between a {
+  color: #800020;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.btn-primary {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 14px;
+  background: #800020;
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  margin-bottom: 12px;
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+  background: #a8003a;
+}
+
+.btn-primary:disabled {
+  background: #c9a3ae;
+  cursor: not-allowed;
+}
+
+.btn-outline {
+  width: 100%;
+  padding: 13px;
+  border-radius: 14px;
+  border: 1.5px solid #D4AF37;
+  background: #faf3dd;
+  color: #8a6d1a;
+  font-weight: 600;
+  font-size: 13.5px;
+  cursor: pointer;
+}
+
+.btn-outline:hover {
+  background: #f5e9c2;
+}
+
+/* ===== Pesan Error Login ===== */
+.login-error {
+  background: #fdeaea;
+  border: 1px solid #fbdada;
+  color: #E5484D;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 10px 14px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  text-align: left;
+}
