@@ -19,6 +19,8 @@ import Laporan from './pages/admin/Laporan'
 import Pengaturan from './pages/admin/Pengaturan'
 import DetailAnggota from './pages/admin/DetailAnggota'
 import EditAnggota from './pages/admin/EditAnggota'
+import EditPembayaran from './pages/admin/EditPembayaran'
+import EditPengeluaran from './pages/admin/EditPengeluaran'
 
 // ==== Halaman Anggota ====
 import DashboardAnggota from './pages/anggota/Dashboard'
@@ -46,6 +48,8 @@ function App() {
           <Route path="/admin/pengingat" element={<Pengingat />} />
           <Route path="/admin/laporan" element={<Laporan />} />
           <Route path="/admin/pengaturan" element={<Pengaturan />} />
+          <Route path="/admin/kas-masuk/edit/:id" element={<EditPembayaran />} />
+          <Route path="/admin/kas-keluar/edit/:id" element={<EditPengeluaran />} />
 
           {/* Anggota */}
           <Route path="/anggota" element={<DashboardAnggota />} />

@@ -13,7 +13,7 @@ function WelcomeBanner({ name = 'Admin' }) {
       <div className="welcome-banner">
         <div className="wb-icon">💰</div>
         <h2>{sapaan}, {name}! 👋</h2>
-        <p>Selamat datang di dashboard RIN Family Finance</p>
+        <p>Selamat datang di dashboard Family Finance</p>
         <span className="wb-date">{tanggal}</span>
       </div>
     )

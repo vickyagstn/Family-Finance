@@ -645,6 +645,30 @@
   transition: all 0.2s ease;
   box-sizing: border-box;
 }
+.form-group-icon {
+  position: relative;
+}
+
+.form-group-icon .fg-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 15px;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.form-group-icon input,
+.form-group-icon select {
+  padding-left: 42px !important;
+}
+
+.form-group label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
 
 .form-group input:focus,
 .form-group select:focus {
@@ -741,6 +765,64 @@
   color: #8a8a92;
   padding: 30px 16px;
 }
+
+/* ===== Empty State (dipakai di semua halaman: Pengingat, Jadwal Acara, Kas Masuk/Keluar, Anggota, Laporan) ===== */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 52px 24px;
+}
+
+.empty-state-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #faf3dd, #f5e9c2);
+  border: 1.5px solid #D4AF37;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  margin-bottom: 18px;
+}
+
+.empty-state h4 {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #800020;
+  margin: 0 0 6px;
+}
+
+.empty-state p {
+  font-size: 12.5px;
+  color: #8a8a92;
+  margin: 0;
+  max-width: 320px;
+}
+
+.empty-state .btn-add {
+  margin-top: 18px;
+  font-size: 12.5px;
+  padding: 11px 18px;
+}
+
+/* Versi ringkas, dipakai di dalam sel tabel (empty-row) */
+.empty-state.compact {
+  padding: 28px 16px;
+}
+
+.empty-state.compact .empty-state-icon {
+  width: 52px;
+  height: 52px;
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+.empty-state.compact h4 { font-size: 13px; }
+.empty-state.compact p { font-size: 12px; }
 
 /* ===== Responsive: Sidebar jadi drawer di layar kecil ===== */
 .hamburger {
@@ -1325,4 +1407,91 @@
   font-size: 11px;
   color: #16a34a;
   font-weight: 600;
+}
+/* ===== Jadwal Acara ===== */
+.acara-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.acara-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 10px 34px rgba(128, 0, 32, 0.08);
+  border: 1px solid #f2eef0;
+  transition: all 0.25s ease;
+}
+
+.acara-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(128, 0, 32, 0.14);
+}
+
+.acara-card-date {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #f4e6ea, #faf3dd);
+  color: #800020;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.acara-card-date .d { font-size: 18px; line-height: 1; }
+.acara-card-date .m { font-size: 10px; letter-spacing: 0.5px; }
+
+.acara-card h3 {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.acara-card p {
+  font-size: 12px;
+  color: #8a8a92;
+  margin-bottom: 4px;
+}
+
+.acara-card-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 14px;
+  border-top: 1px solid #f4f2f3;
+  padding-top: 14px;
+}
+
+@media (max-width: 900px) {
+  .acara-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .acara-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.form-group-icon {
+  position: relative;
+}
+
+.form-group-icon .fg-icon {
+  position: absolute;
+  left: 14px;
+  top: 38px;
+  font-size: 15px;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.form-group-icon input,
+.form-group-icon select {
+  padding-left: 42px !important;
 }

@@ -24,7 +24,7 @@ function formatRupiah(angka) {
 function linkWhatsApp(noHp, ketua, nama) {
   if (!noHp) return '#'
   const nomor = '62' + noHp.replace(/-/g, '').replace(/^0/, '')
-  const pesan = `Halo ${ketua}, ini pengingat kas keluarga dari RIN Family Finance untuk ${nama}.`
+  const pesan = `Halo ${ketua}, ini pengingat kas keluarga dari Family Finance untuk ${nama}.`
   return `https://wa.me/${nomor}?text=${encodeURIComponent(pesan)}`
 }
 
@@ -46,7 +46,7 @@ function DetailAnggota() {
     setLoading(true)
 
     const { data: dataKeluarga, error: errorKeluarga } = await supabase
-      .from('keluarga')
+      .from('anggota_keluarga')
       .select('*')
       .eq('id', id)
       .maybeSingle()
@@ -159,7 +159,13 @@ function DetailAnggota() {
             <tbody>
               {riwayat.length === 0 && (
                 <tr className="empty-row">
-                  <td colSpan={4}>Belum ada riwayat pembayaran untuk keluarga ini.</td>
+                  <td colSpan={4}>
+                    <div className="empty-state compact">
+                      <div className="empty-state-icon">🧾</div>
+                      <h4>Belum ada riwayat pembayaran</h4>
+                      <p>Transaksi kas masuk dari keluarga ini akan tampil di sini.</p>
+                    </div>
+                  </td>
                 </tr>
               )}
               {riwayat.map((r) => (

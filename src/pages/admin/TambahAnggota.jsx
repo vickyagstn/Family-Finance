@@ -1,48 +1,52 @@
 import { useState } from 'react'
 import './admin.css'
-import { useNavigate, Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Sidebar from '../../components/Sidebar'
 import Topbar from '../../components/Topbar'
 import { supabase } from '../../supabaseClient'
 
 function TambahAnggota() {
-  const navigate = useNavigate()
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [menyimpan, setMenyimpan] = useState(false)
+  const [form, setForm] = useState({
+    nama: '', ketua: '', jumlah_anggota: '', no_hp: '', alamat: '', status: 'lunas',
+  })
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
+  const navigate = useNavigate()
 
-  const [nama, setNama] = useState('')
-  const [ketua, setKetua] = useState('')
-  const [jumlahAnggota, setJumlahAnggota] = useState('')
-  const [noHp, setNoHp] = useState('')
-  const [alamat, setAlamat] = useState('')
+  function updateField(key, value) {
+    setForm({ ...form, [key]: value })
+  }
 
-  async function simpan(e) {
-    e.preventDefault()
+  async function handleSimpan() {
+    setError('')
 
-    if (!nama || !ketua) {
-      alert('Nama keluarga dan nama ketua wajib diisi')
+    if (!form.nama || !form.ketua) {
+      setError('Nama Keluarga dan Ketua Keluarga wajib diisi')
       return
     }
 
-    setMenyimpan(true)
+    setLoading(true)
 
-    const { error } = await supabase.from('keluarga').insert({
-      nama,
-      ketua,
-      jumlah_anggota: jumlahAnggota ? Number(jumlahAnggota) : 1,
-      no_hp: noHp || null,
-      alamat: alamat || null,
-      status: 'jatuh',
-    })
+    const { error: insertError } = await supabase.from('anggota_keluarga').insert([
+      {
+        nama: form.nama,
+        ketua: form.ketua,
+        jumlah_anggota: Number(form.jumlah_anggota) || 1,
+        no_hp: form.no_hp,
+        alamat: form.alamat,
+        status: form.status,
+      },
+    ])
 
-    setMenyimpan(false)
+    setLoading(false)
 
-    if (error) {
-      alert('Gagal menyimpan: ' + error.message)
+    if (insertError) {
+      setError(insertError.message)
       return
     }
 
-    navigate('/admin/anggota')
+    navigate('/admin/anggota', { state: { toast: 'Anggota keluarga berhasil ditambahkan' } })
   }
 
   return (
@@ -55,68 +59,87 @@ function TambahAnggota() {
         <div className="topbar">
           <div>
             <h2>Tambah Anggota</h2>
-            <p>Daftarkan keluarga baru ke sistem</p>
+            <p>Daftarkan keluarga baru ke dalam sistem</p>
           </div>
         </div>
 
-        <form className="form-card" onSubmit={simpan}>
-          <div className="form-group">
+        <div className="form-card">
+          <div className="form-group form-group-icon">
             <label>Nama Keluarga</label>
+            <span className="fg-icon">👪</span>
             <input
               type="text"
               placeholder="Contoh: Keluarga Santoso"
-              value={nama}
-              onChange={(e) => setNama(e.target.value)}
+              value={form.nama}
+              onChange={(e) => updateField('nama', e.target.value)}
             />
           </div>
 
-          <div className="form-group">
-            <label>Nama Ketua Keluarga</label>
+          <div className="form-group form-group-icon">
+            <label>Ketua Keluarga</label>
+            <span className="fg-icon">🧑</span>
             <input
               type="text"
-              placeholder="Contoh: Budi Santoso"
-              value={ketua}
-              onChange={(e) => setKetua(e.target.value)}
+              placeholder="Nama lengkap ketua keluarga"
+              value={form.ketua}
+              onChange={(e) => updateField('ketua', e.target.value)}
             />
           </div>
 
-          <div className="form-group">
+          <div className="form-group form-group-icon">
             <label>Jumlah Anggota</label>
+            <span className="fg-icon">🔢</span>
             <input
               type="number"
               placeholder="Contoh: 4"
-              value={jumlahAnggota}
-              onChange={(e) => setJumlahAnggota(e.target.value)}
+              value={form.jumlah_anggota}
+              onChange={(e) => updateField('jumlah_anggota', e.target.value)}
             />
           </div>
 
-          <div className="form-group">
-            <label>No. HP / WhatsApp</label>
+          <div className="form-group form-group-icon">
+            <label>No. HP</label>
+            <span className="fg-icon">📱</span>
             <input
               type="text"
-              placeholder="Contoh: 0812-3456-7890"
-              value={noHp}
-              onChange={(e) => setNoHp(e.target.value)}
+              placeholder="08xx-xxxx-xxxx"
+              value={form.no_hp}
+              onChange={(e) => updateField('no_hp', e.target.value)}
             />
           </div>
 
-          <div className="form-group">
+          <div className="form-group form-group-icon">
             <label>Alamat</label>
+            <span className="fg-icon">📍</span>
             <input
               type="text"
-              placeholder="Contoh: Jl. Melati No. 12"
-              value={alamat}
-              onChange={(e) => setAlamat(e.target.value)}
+              placeholder="Alamat lengkap"
+              value={form.alamat}
+              onChange={(e) => updateField('alamat', e.target.value)}
             />
           </div>
+
+          <div className="form-group form-group-icon">
+            <label>Status</label>
+            <span className="fg-icon">🏷️</span>
+            <select value={form.status} onChange={(e) => updateField('status', e.target.value)}>
+              <option value="lunas">Lunas</option>
+              <option value="jatuh">Jatuh Tempo</option>
+              <option value="tunggak">Menunggak</option>
+            </select>
+          </div>
+
+          {error && (
+            <p style={{ color: '#E5484D', fontSize: '12.5px', marginBottom: '14px' }}>{error}</p>
+          )}
 
           <div className="form-actions">
             <Link to="/admin/anggota" className="btn-cancel">Batal</Link>
-            <button type="submit" className="btn-save" disabled={menyimpan}>
-              {menyimpan ? 'Menyimpan...' : 'Simpan'}
+            <button className="btn-save" onClick={handleSimpan} disabled={loading}>
+              {loading ? 'Menyimpan...' : 'Simpan'}
             </button>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   )

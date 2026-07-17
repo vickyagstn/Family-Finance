@@ -8,7 +8,7 @@
   background: linear-gradient(180deg, #fdf6f8 0%, #F8F9FA 45%);
   font-family: 'Poppins', sans-serif;
   overflow-x: hidden;
-  padding: 40px 20px 60px;
+  padding: 40px 20px 110px;
 }
 
 .ang-wrap {
@@ -18,7 +18,6 @@
   z-index: 2;
 }
 
-/* Dekorasi blob background */
 .ang-blob {
   position: fixed;
   border-radius: 50%;
@@ -33,6 +32,7 @@
   background: rgba(128, 0, 32, 0.12);
   top: -120px;
   right: -100px;
+  animation: angFloat 9s ease-in-out infinite;
 }
 
 .ang-blob-2 {
@@ -41,9 +41,15 @@
   background: rgba(212, 175, 55, 0.15);
   bottom: -100px;
   left: -100px;
+  animation: angFloat 9s ease-in-out infinite;
+  animation-delay: -4.5s;
 }
 
-/* ===== Topbar ===== */
+@keyframes angFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(18px, -22px) scale(1.08); }
+}
+
 .ang-topbar {
   display: flex;
   justify-content: space-between;
@@ -85,6 +91,8 @@
   box-shadow: 0 8px 20px rgba(229, 72, 77, 0.12);
   transition: all 0.2s ease;
   flex-shrink: 0;
+  font-family: inherit;
+  cursor: pointer;
 }
 
 .ang-logout:hover {
@@ -92,15 +100,51 @@
   transform: translateY(-2px);
 }
 
-/* ===== Kartu ID Digital ===== */
+/* =========================================================
+   KARTU KELUARGA — background upgrade: multi radial glow +
+   pattern diagonal + shine animasi + crown watermark
+   ========================================================= */
+
 .ang-id-card {
   position: relative;
-  background: linear-gradient(135deg, #800020 0%, #5A0018 55%, #3d000f 100%);
+  background:
+    radial-gradient(circle at 12% 8%, rgba(255, 205, 130, 0.25), transparent 42%),
+    radial-gradient(circle at 90% 0%, rgba(212, 175, 55, 0.22), transparent 45%),
+    radial-gradient(circle at 100% 100%, rgba(255, 60, 100, 0.18), transparent 55%),
+    linear-gradient(135deg, #800020 0%, #5A0018 55%, #3d000f 100%);
   border-radius: 26px;
   padding: 26px 26px 22px;
   margin-bottom: 20px;
   overflow: hidden;
-  box-shadow: 0 24px 50px rgba(90, 0, 24, 0.35);
+  box-shadow:
+    0 24px 50px rgba(90, 0, 24, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.ang-id-card::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -60%;
+  width: 60%;
+  height: 200%;
+  background: linear-gradient(
+    115deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.08) 45%,
+    rgba(255, 255, 255, 0.12) 50%,
+    rgba(255, 255, 255, 0.08) 55%,
+    transparent 70%
+  );
+  transform: rotate(8deg);
+  animation: angShine 6s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes angShine {
+  0%, 100% { left: -60%; }
+  50% { left: 120%; }
 }
 
 .ang-id-pattern {
@@ -114,6 +158,7 @@
     transparent 14px
   );
   pointer-events: none;
+  z-index: 0;
 }
 
 .ang-id-crown {
@@ -121,9 +166,10 @@
   top: -18px;
   right: -14px;
   font-size: 130px;
-  color: rgba(212, 175, 55, 0.12);
+  color: rgba(212, 175, 55, 0.14);
   transform: rotate(18deg);
   pointer-events: none;
+  z-index: 0;
 }
 
 .ang-id-top {
@@ -190,7 +236,6 @@
   letter-spacing: 0.03em;
 }
 
-/* ===== Stats ===== */
 .ang-stats {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -241,7 +286,6 @@
 
 .ang-stat .value.green-text { color: #1DAA61; }
 
-/* ===== Panel ===== */
 .ang-panel {
   background: #fff;
   border-radius: 22px;
@@ -258,7 +302,6 @@
   margin: 0 0 16px;
 }
 
-/* ===== Timeline ===== */
 .timeline-item {
   display: flex;
   gap: 14px;
@@ -292,6 +335,8 @@
 
 .timeline-content {
   padding-top: 3px;
+  flex: 1;
+  min-width: 0;
 }
 
 .t-title {
@@ -306,7 +351,6 @@
   margin-top: 3px;
 }
 
-/* ===== Acara Terdekat ===== */
 .ang-events {
   display: flex;
   flex-direction: column;
@@ -322,6 +366,7 @@
   background: #fbfbfc;
   border: 1px solid #f4f2f3;
   transition: all 0.2s ease;
+  cursor: pointer;
 }
 
 .ang-event-card:hover {
@@ -367,10 +412,92 @@
   gap: 4px;
 }
 
-/* ===== Responsive ===== */
+.ang-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  border-radius: 18px;
+  padding: 16px 18px;
+  margin-bottom: 20px;
+}
+
+.ang-alert.success {
+  background: linear-gradient(135deg, #e7f8ee, #ecfaf1);
+  border: 1px solid #cdeedd;
+}
+
+.ang-alert.warning {
+  background: linear-gradient(135deg, #fdf3e0, #fdf7e9);
+  border: 1px solid #f5e2b8;
+}
+
+.ang-alert .icon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.ang-alert .title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #1F2937;
+  margin-bottom: 3px;
+}
+
+.ang-alert .sub {
+  font-size: 11.5px;
+  color: #6b6b70;
+  line-height: 1.4;
+}
+
+.ang-bottomnav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  max-width: 640px;
+  margin: 0 auto;
+  background: #fff;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px 8px calc(10px + env(safe-area-inset-bottom));
+  border-radius: 22px 22px 0 0;
+  box-shadow: 0 -10px 30px rgba(128, 0, 32, 0.12);
+  border-top: 1px solid #f4f2f3;
+  z-index: 50;
+}
+
+.ang-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  font-size: 10px;
+  font-weight: 600;
+  color: #8a8a92;
+  text-decoration: none;
+  padding: 6px 14px;
+  border-radius: 14px;
+  transition: all 0.2s ease;
+}
+
+.ang-nav-item .nav-ic {
+  font-size: 19px;
+  line-height: 1;
+}
+
+.ang-nav-item.active {
+  color: #800020;
+  background: linear-gradient(135deg, #faf3dd, #f5e9c2);
+}
+
+.ang-nav-item:hover:not(.active) {
+  color: #800020;
+}
+
 @media (max-width: 480px) {
   .ang-page {
-    padding: 24px 14px 40px;
+    padding: 24px 14px 100px;
   }
 
   .ang-topbar h2 {
@@ -408,7 +535,6 @@
   }
 }
 
-/* ===== Filter Bulan Riwayat ===== */
 .ang-panel-head {
   display: flex;
   align-items: center;
@@ -420,6 +546,17 @@
 
 .ang-panel-head h3 {
   margin: 0;
+}
+
+.ang-panel-head a {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #800020;
+  text-decoration: none;
+}
+
+.ang-panel-head a:hover {
+  text-decoration: underline;
 }
 
 .ang-bulan-select {
@@ -448,7 +585,6 @@
   padding: 20px 0;
 }
 
-/* ===== Total per bulan (rekap mingguan) ===== */
 .ang-total-bulan {
   background: linear-gradient(135deg, #faf3f5, #fdf6f8);
   border: 1px solid #f4e6ea;
@@ -471,8 +607,253 @@
   margin-top: 2px;
 }
 
-/* ===== Reset tombol logout jadi <button> ===== */
-.ang-logout {
-  font-family: inherit;
+/* =========================================================
+   KALENDER ACARA — panel gabungan navigasi bulan + acara
+   mendatang di Dashboard (menggantikan "Acara Terdekat")
+   ========================================================= */
+
+.ang-cal-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.ang-cal-arrow {
+  width: 34px;
+  height: 34px;
+  border-radius: 11px;
+  border: 1.5px solid #f4e6ea;
+  background: #fbfbfc;
+  color: #800020;
+  font-size: 14px;
+  font-weight: 700;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.ang-cal-arrow:hover {
+  background: linear-gradient(135deg, #800020, #a8003a);
+  color: #fff;
+  border-color: transparent;
+  transform: translateY(-1px);
+}
+
+.ang-cal-month {
+  font-size: 14.5px;
+  font-weight: 700;
+  text-transform: capitalize;
+  background: linear-gradient(135deg, #800020, #a8003a);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  letter-spacing: 0.01em;
+}
+
+.ang-cal-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 8px;
+}
+
+.ang-cal-weekdays span {
+  text-align: center;
+  font-size: 10px;
+  font-weight: 700;
+  color: #c9a3b2;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.ang-cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  row-gap: 4px;
+  margin-bottom: 18px;
+}
+
+.ang-cal-day {
+  position: relative;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #3a3a40;
+  background: transparent;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.18s ease;
+}
+
+.ang-cal-day.is-blank {
+  cursor: default;
+  pointer-events: none;
+}
+
+.ang-cal-day.is-today {
+  border: 1.5px solid #D4AF37;
+  color: #a5820f;
+  font-weight: 700;
+}
+
+.ang-cal-day:hover:not(.is-blank):not(.is-selected) {
+  background: #faf3f5;
+  color: #800020;
+}
+
+.ang-cal-day.is-selected {
+  background: linear-gradient(135deg, #800020, #a8003a);
+  color: #fff !important;
+  font-weight: 700;
+  box-shadow: 0 8px 18px rgba(128, 0, 32, 0.32);
+}
+
+.ang-cal-day .ev-dot {
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #D4AF37;
+}
+
+.ang-cal-day.is-selected .ev-dot {
+  background: #fff;
+}
+
+.ang-cal-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #f0e3e7, transparent);
+  margin-bottom: 16px;
+}
+
+.ang-cal-sublabel {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #b8869a;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 10px;
+}
+
+/* =========================================================
+   MODAL DETAIL ACARA
+   ========================================================= */
+
+.ang-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(61, 0, 15, 0.45);
+  backdrop-filter: blur(3px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 100;
+  animation: angFadeIn 0.2s ease;
+}
+
+@keyframes angFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.ang-modal {
+  position: relative;
+  background: #fff;
+  border-radius: 24px;
+  padding: 28px 24px 24px;
+  width: 100%;
+  max-width: 380px;
+  box-shadow: 0 30px 60px rgba(90, 0, 24, 0.35);
+  animation: angModalPop 0.25s ease;
+}
+
+@keyframes angModalPop {
+  from { opacity: 0; transform: translateY(12px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.ang-modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  border: none;
+  background: #f7f2f3;
+  color: #8a8a92;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.ang-modal-close:hover {
+  background: #fdeaea;
+  color: #E5484D;
+}
+
+.ang-modal-date {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #800020, #a8003a);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  margin-bottom: 16px;
+  box-shadow: 0 10px 24px rgba(128, 0, 32, 0.25);
+}
+
+.ang-modal-date .d { font-size: 20px; line-height: 1; }
+.ang-modal-date .m { font-size: 10px; text-transform: uppercase; opacity: 0.9; margin-top: 2px; }
+
+.ang-modal-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1F2937;
+  margin: 0 0 16px;
+  padding-right: 30px;
+}
+
+.ang-modal-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  color: #4b4b52;
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+.ang-modal-icon {
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.ang-modal-desc {
+  margin-top: 12px;
+  padding-top: 14px;
+  border-top: 1px solid #f4f2f3;
+  font-size: 12.5px;
+  color: #6b6b70;
+  line-height: 1.6;
 }

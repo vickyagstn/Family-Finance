@@ -18,7 +18,7 @@ function statusLabel(status) {
 }
 
 function buatPesanDefault(k) {
-  return `Halo ${k.ketua}, ini pengingat dari RIN Family Finance.\n\nMohon segera melakukan pembayaran kas keluarga ${k.nama}. Terima kasih 🙏`
+  return `Halo ${k.ketua}, ini pengingat dari Family Finance.\n\nMohon segera melakukan pembayaran kas keluarga ${k.nama}. Terima kasih 🙏`
 }
 
 function linkWhatsApp(noHp, pesan) {
@@ -41,7 +41,7 @@ function Pengingat() {
 
   async function ambilData() {
     setLoading(true)
-    const { data, error } = await supabase.from('keluarga').select('*').order('nama')
+    const { data, error } = await supabase.from('anggota_keluarga').select('*').order('nama')
     if (error) {
       console.error('Gagal ambil data keluarga:', error)
     } else {
@@ -71,7 +71,7 @@ function Pengingat() {
   }
 
   async function tandaiLunas(id) {
-    const { error } = await supabase.from('keluarga').update({ status: 'lunas' }).eq('id', id)
+    const { error } = await supabase.from('anggota_keluarga').update({ status: 'lunas' }).eq('id', id)
     if (error) {
       alert('Gagal update status: ' + error.message)
       return
@@ -80,7 +80,7 @@ function Pengingat() {
   }
 
   async function tandaiBelumBayar(id) {
-    const { error } = await supabase.from('keluarga').update({ status: 'jatuh' }).eq('id', id)
+    const { error } = await supabase.from('anggota_keluarga').update({ status: 'jatuh' }).eq('id', id)
     if (error) {
       alert('Gagal update status: ' + error.message)
       return
@@ -121,9 +121,11 @@ function Pengingat() {
         {!loading && (
           <div className="panel">
             {dataTampil.length === 0 && (
-              <p style={{ color: '#8a8a92', fontSize: '12.5px' }}>
-                Tidak ada keluarga di kategori ini.
-              </p>
+              <div className="empty-state compact">
+                <div className="empty-state-icon">🔔</div>
+                <h4>Tidak ada keluarga di kategori ini</h4>
+                <p>Coba pilih kategori lain, atau semua keluarga di sini sudah lunas.</p>
+              </div>
             )}
 
             {dataTampil.map((k) => {

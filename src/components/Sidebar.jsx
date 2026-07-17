@@ -50,7 +50,7 @@ function Sidebar({ active, isOpen, onClose }) {
 
       <div className={`sidebar-dark ${isOpen ? 'open' : ''}`}>
         <div className="sd-brand-row">
-          <div className="sd-brand">RIN Family Finance</div>
+        <div className="sd-brand">Family Finance</div>
           <span className="sd-close" onClick={onClose}>✕</span>
         </div>
 

@@ -5,15 +5,12 @@ import { supabase } from '../supabaseClient'
 
 function Login() {
   const navigate = useNavigate()
-
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [ingatSaya, setIngatSaya] = useState(false)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
-  async function handleLogin(e) {
-    e.preventDefault()
+  async function handleLogin() {
     setError('')
 
     if (!email || !password) {
@@ -23,103 +20,111 @@ function Login() {
 
     setLoading(true)
 
-    // 1. Login ke Supabase Auth
     const { data, error: loginError } = await supabase.auth.signInWithPassword({
       email,
       password,
     })
 
-    console.log('LOGIN RESULT:', data, loginError)
-
     if (loginError) {
+      setError(loginError.message)
       setLoading(false)
-      setError('Email atau password salah')
       return
     }
 
     const userId = data.user.id
-    console.log('USER ID YANG LOGIN:', userId)
 
-    // 2. Cek apakah ini akun Admin
-    const { data: dataAdmin, error: errorAdmin } = await supabase
-      .from('profil_admin')
-      .select('id')
-      .eq('user_id', userId)
-      .maybeSingle()
-
-    console.log('HASIL CEK PROFIL_ADMIN:', dataAdmin, errorAdmin)
-
-    if (dataAdmin) {
-      setLoading(false)
-      navigate('/admin')
-      return
-    }
-
-    // 3. Kalau bukan admin, cek apakah ini akun Anggota
-    const { data: dataKeluarga, error: errorKeluarga } = await supabase
-      .from('keluarga')
-      .select('id')
-      .eq('user_id', userId)
-      .maybeSingle()
-
-    console.log('HASIL CEK KELUARGA:', dataKeluarga, errorKeluarga)
+    const { data: profile, error: profileError } = await supabase
+      .from('profiles')
+      .select('role')
+      .eq('id', userId)
+      .single()
 
     setLoading(false)
 
-    if (dataKeluarga) {
-      navigate('/anggota')
+    if (profileError || !profile) {
+      setError('Profil tidak ditemukan, hubungi admin')
       return
     }
 
-    // 4. Kalau dua-duanya gak ketemu, akun belum terhubung ke data manapun
-    setError('Akun ini belum dihubungkan ke data admin atau keluarga. Hubungi pengurus.')
-    await supabase.auth.signOut()
+    if (profile.role === 'admin') {
+      navigate('/admin')
+    } else {
+      navigate('/anggota')
+    }
   }
 
   return (
     <div className="login-page">
-      <div className="login-card">
-        <h1>RIN Family Finance</h1>
-        <p>Kelola kas keluarga dengan mudah, transparan, dan aman.</p>
+      <div className="login-left">
+        <div className="login-deco">💰</div>
+        <div className="login-left-content">
+          <div className="login-badge-big">💰</div>
+          <h1>Family <span>Finance</span></h1>
+          <p>Kelola kas keluarga besar dengan mudah, transparan, dan aman — semua dalam satu aplikasi.</p>
 
-        <form onSubmit={handleLogin}>
+          <div className="login-feature-list">
+            <div className="login-feature-item">
+              <span className="login-feature-icon">📊</span>
+              Pantau kas masuk & keluar secara real-time
+            </div>
+            <div className="login-feature-item">
+              <span className="login-feature-icon">🔔</span>
+              Pengingat pembayaran otomatis
+            </div>
+            <div className="login-feature-item">
+              <span className="login-feature-icon">🔒</span>
+              Data keluarga aman dan privat
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="login-right">
+        <div className="login-card">
+          <div className="login-card-header">
+            <h2>Selamat Datang</h2>
+            <p className="subtitle">Masuk untuk mengakses akun kamu</p>
+          </div>
+
           <div className="field">
             <label>Email</label>
-            <input
-              type="email"
-              placeholder="nama@email.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
+            <div className="field-wrap">
+              <span className="field-icon">✉️</span>
+              <input
+                type="email"
+                placeholder="nama@email.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
           </div>
 
           <div className="field">
             <label>Password</label>
-            <input
-              type="password"
-              placeholder="••••••••"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+            <div className="field-wrap">
+              <span className="field-icon">🔒</span>
+              <input
+                type="password"
+                placeholder="••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
           </div>
 
-          {error && <p className="login-error">{error}</p>}
+          {error && <div className="login-error">{error}</div>}
 
           <div className="row-between">
             <label className="remember">
-              <input
-                type="checkbox"
-                checked={ingatSaya}
-                onChange={(e) => setIngatSaya(e.target.checked)}
-              /> Ingat saya
+              <input type="checkbox" /> Ingat saya
             </label>
             <a href="#">Lupa Password?</a>
           </div>
 
-          <button className="btn-primary" type="submit" disabled={loading}>
+          <button className="btn-primary" onClick={handleLogin} disabled={loading}>
             {loading ? 'Memproses...' : 'Masuk'}
           </button>
-        </form>
+        </div>
       </div>
     </div>
   )

@@ -28,7 +28,7 @@ function EditAnggota() {
 
   async function ambilData() {
     setLoading(true)
-    const { data, error } = await supabase.from('keluarga').select('*').eq('id', id).maybeSingle()
+    const { data, error } = await supabase.from('anggota_keluarga').select('*').eq('id', id).maybeSingle()
 
     if (error || !data) {
       showToast('Data keluarga tidak ditemukan', 'error')
@@ -56,7 +56,7 @@ function EditAnggota() {
     setMenyimpan(true)
 
     const { error } = await supabase
-      .from('keluarga')
+      .from('anggota_keluarga')
       .update({
         nama,
         ketua,

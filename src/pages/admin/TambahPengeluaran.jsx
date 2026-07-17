@@ -1,67 +1,50 @@
 import { useState } from 'react'
 import './admin.css'
-import { useNavigate, Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Sidebar from '../../components/Sidebar'
 import Topbar from '../../components/Topbar'
 import { supabase } from '../../supabaseClient'
-import { tebakKategori } from '../../utils/autoKategori'
 
 function TambahPengeluaran() {
-  const navigate = useNavigate()
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [menyimpan, setMenyimpan] = useState(false)
+  const [form, setForm] = useState({
+    tanggal: '', keterangan: '', kategori: 'operasional', nominal: '',
+  })
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
+  const navigate = useNavigate()
 
-  const [keterangan, setKeterangan] = useState('')
-  const [kategori, setKategori] = useState('Operasional')
-  const [kategoriManual, setKategoriManual] = useState(false) // true kalau user pilih sendiri
-  const [tanggal, setTanggal] = useState('')
-  const [nominal, setNominal] = useState('')
-  const [catatan, setCatatan] = useState('')
-
-  // Auto-kategori: jalan tiap kali user ngetik keterangan,
-  // TAPI hanya kalau user belum pernah pilih kategori manual sendiri
-  function handleKeteranganChange(e) {
-    const teks = e.target.value
-    setKeterangan(teks)
-
-    if (!kategoriManual) {
-      setKategori(tebakKategori(teks))
-    }
+  function updateField(key, value) {
+    setForm({ ...form, [key]: value })
   }
 
-  // Kalau user ubah dropdown kategori sendiri, tandai manual
-  // supaya auto-kategori berhenti nge-override
-  function handleKategoriChange(e) {
-    setKategori(e.target.value)
-    setKategoriManual(true)
-  }
+  async function handleSimpan() {
+    setError('')
 
-  async function simpan(e) {
-    e.preventDefault()
-
-    if (!keterangan || !tanggal || !nominal) {
-      alert('Keterangan, tanggal, dan nominal wajib diisi')
+    if (!form.tanggal || !form.keterangan || !form.nominal) {
+      setError('Tanggal, Keterangan, dan Nominal wajib diisi')
       return
     }
 
-    setMenyimpan(true)
+    setLoading(true)
 
-    const { error } = await supabase.from('kas_keluar').insert({
-      keterangan,
-      kategori,
-      tanggal,
-      nominal: Number(nominal),
-      dicatat_oleh: 'Admin',
-    })
+    const { error: insertError } = await supabase.from('kas_keluar').insert([
+      {
+        tanggal: form.tanggal,
+        keterangan: form.keterangan,
+        kategori: form.kategori,
+        nominal: Number(form.nominal),
+      },
+    ])
 
-    setMenyimpan(false)
+    setLoading(false)
 
-    if (error) {
-      alert('Gagal menyimpan: ' + error.message)
+    if (insertError) {
+      setError(insertError.message)
       return
     }
 
-    navigate('/admin/kas-keluar')
+    navigate('/admin/kas-keluar', { state: { toast: 'Pengeluaran berhasil ditambahkan' } })
   }
 
   return (
@@ -78,65 +61,61 @@ function TambahPengeluaran() {
           </div>
         </div>
 
-        <form className="form-card" onSubmit={simpan}>
-          <div className="form-group">
+        <div className="form-card">
+          <div className="form-group form-group-icon">
+            <label>Tanggal</label>
+            <span className="fg-icon">📅</span>
+            <input
+              type="date"
+              value={form.tanggal}
+              onChange={(e) => updateField('tanggal', e.target.value)}
+            />
+          </div>
+
+          <div className="form-group form-group-icon">
             <label>Keterangan</label>
+            <span className="fg-icon">📝</span>
             <input
               type="text"
               placeholder="Contoh: Sewa Tenda Acara"
-              value={keterangan}
-              onChange={handleKeteranganChange}
+              value={form.keterangan}
+              onChange={(e) => updateField('keterangan', e.target.value)}
             />
           </div>
 
-          <div className="form-group">
-            <label>
-              Kategori{' '}
-              {!kategoriManual && keterangan && (
-                <span className="auto-tag">✨ auto-terdeteksi</span>
-              )}
-            </label>
-            <select value={kategori} onChange={handleKategoriChange}>
-              <option value="Acara">Acara</option>
-              <option value="Konsumsi">Konsumsi</option>
-              <option value="Sosial">Sosial</option>
-              <option value="Operasional">Operasional</option>
-              <option value="Lainnya">Lainnya</option>
+          <div className="form-group form-group-icon">
+            <label>Kategori</label>
+            <span className="fg-icon">🏷️</span>
+            <select value={form.kategori} onChange={(e) => updateField('kategori', e.target.value)}>
+              <option value="acara">Acara</option>
+              <option value="konsumsi">Konsumsi</option>
+              <option value="sosial">Sosial</option>
+              <option value="operasional">Operasional</option>
             </select>
           </div>
 
-          <div className="form-group">
-            <label>Tanggal</label>
-            <input type="date" value={tanggal} onChange={(e) => setTanggal(e.target.value)} />
-          </div>
-
-          <div className="form-group">
+          <div className="form-group form-group-icon">
             <label>Nominal</label>
+            <span className="fg-icon">💵</span>
             <input
               type="number"
               placeholder="Contoh: 500000"
-              value={nominal}
-              onChange={(e) => setNominal(e.target.value)}
+              value={form.nominal}
+              onChange={(e) => updateField('nominal', e.target.value)}
             />
           </div>
 
-          <div className="form-group">
-            <label>Catatan</label>
-            <input
-              type="text"
-              placeholder="Catatan tambahan (opsional)"
-              value={catatan}
-              onChange={(e) => setCatatan(e.target.value)}
-            />
-          </div>
+          {error && (
+            <p style={{ color: '#E5484D', fontSize: '12.5px', marginBottom: '14px' }}>{error}</p>
+          )}
 
           <div className="form-actions">
             <Link to="/admin/kas-keluar" className="btn-cancel">Batal</Link>
-            <button type="submit" className="btn-save" disabled={menyimpan}>
-              {menyimpan ? 'Menyimpan...' : 'Simpan'}
+            <button className="btn-save" onClick={handleSimpan} disabled={loading}>
+              {loading ? 'Menyimpan...' : 'Simpan'}
             </button>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   )

@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 import Sidebar from '../../components/Sidebar'
 import Topbar from '../../components/Topbar'
 import { supabase } from '../../supabaseClient'
-import { useToast } from '../../components/ToastContext'
 
 function statusLabel(status) {
   if (status === 'lunas') return { text: 'Lunas', cls: 'lunas' }
@@ -13,20 +12,17 @@ function statusLabel(status) {
 }
 
 function linkWhatsApp(k) {
-  if (!k.no_hp) return '#'
-  const nomor = '62' + k.no_hp.replace(/-/g, '').replace(/^0/, '')
-  const pesan = `Halo ${k.ketua}, ini pengingat kas keluarga dari RIN Family Finance.`
+  const nomor = '62' + (k.no_hp || '').replace(/-/g, '').replace(/^0/, '')
+  const pesan = `Halo ${k.ketua}, ini pengingat kas keluarga dari Family Finance.`
   return `https://wa.me/${nomor}?text=${encodeURIComponent(pesan)}`
 }
 
 function AnggotaKeluarga() {
-  const { showToast } = useToast()
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [filter, setFilter] = useState('semua')
   const [search, setSearch] = useState('')
   const [dataKeluarga, setDataKeluarga] = useState([])
   const [loading, setLoading] = useState(true)
-  const [konfirmasiHapus, setKonfirmasiHapus] = useState(null)
 
   useEffect(() => {
     ambilData()
@@ -35,30 +31,12 @@ function AnggotaKeluarga() {
   async function ambilData() {
     setLoading(true)
     const { data, error } = await supabase
-      .from('keluarga')
+      .from('anggota_keluarga')
       .select('*')
-      .order('nama', { ascending: true })
+      .order('created_at', { ascending: false })
 
-    if (error) {
-      showToast('Gagal mengambil data: ' + error.message, 'error')
-    } else {
-      setDataKeluarga(data)
-    }
+    if (!error) setDataKeluarga(data)
     setLoading(false)
-  }
-
-  async function konfirmasiHapusSekarang() {
-    const { id, nama } = konfirmasiHapus
-    setKonfirmasiHapus(null)
-
-    const { error } = await supabase.from('keluarga').delete().eq('id', id)
-
-    if (error) {
-      showToast('Gagal menghapus: ' + error.message, 'error')
-    } else {
-      setDataKeluarga((prev) => prev.filter((k) => k.id !== id))
-      showToast(`"${nama}" berhasil dihapus`, 'success')
-    }
   }
 
   const filterList = [
@@ -110,96 +88,49 @@ function AnggotaKeluarga() {
           </div>
         </div>
 
-        {loading && <p style={{ color: '#8a8a92', fontSize: '13px' }}>Memuat data...</p>}
+        <div className="keluarga-grid">
+          {loading && <p style={{ color: '#8a8a92', fontSize: '13px' }}>Memuat data...</p>}
 
-        {!loading && (
-          <div className="keluarga-grid">
-            {dataTampil.length === 0 && (
-              <p style={{ color: '#8a8a92', fontSize: '13px', gridColumn: '1 / -1' }}>
-                Tidak ada keluarga yang cocok.
-              </p>
-            )}
-
-            {dataTampil.map((k) => {
-              const s = statusLabel(k.status)
-              const kataKedua = k.nama.split(' ')[1]
-              const inisial = kataKedua ? kataKedua.slice(0, 2).toUpperCase() : 'KK'
-
-              return (
-                <div className="keluarga-card" key={k.id}>
-                  <div className="kc-top">
-                    <div className="kc-avatar">{inisial}</div>
-                    <span className={`status-pill ${s.cls}`}>{s.text}</span>
-                  </div>
-
-                  <h3>{k.nama}</h3>
-                  <p className="kc-ketua">Ketua: {k.ketua}</p>
-
-                  <div className="kc-info">
-                    <div><span>Jumlah Anggota</span><b>{k.jumlah_anggota || '-'} orang</b></div>
-                    <div><span>No. HP</span><b>{k.no_hp || '-'}</b></div>
-                    <div><span>Alamat</span><b>{k.alamat || '-'}</b></div>
-                  </div>
-
-                  <div className="kc-actions">
-                    <Link
-                      to={`/admin/anggota/${k.id}`}
-                      className="ac-btn"
-                      style={{ textDecoration: 'none', textAlign: 'center' }}
-                    >
-                      Detail
-                    </Link>
-                    <Link
-                      to={`/admin/anggota/edit/${k.id}`}
-                      className="ac-btn"
-                      style={{ textDecoration: 'none', textAlign: 'center' }}
-                    >
-                      Edit
-                    </Link>
-                    <a
-                      href={linkWhatsApp(k)}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="ac-btn wa"
-                      style={{ textDecoration: 'none', textAlign: 'center' }}
-                    >
-                      WhatsApp
-                    </a>
-                    <button
-                      className="ac-btn"
-                      style={{ color: '#E5484D', borderColor: '#fbdada', background: '#fdeaea' }}
-                      onClick={() => setKonfirmasiHapus({ id: k.id, nama: k.nama })}
-                    >
-                      Hapus
-                    </button>
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-        )}
-      </div>
-
-      {konfirmasiHapus && (
-        <div className="modal-overlay" onClick={() => setKonfirmasiHapus(null)}>
-          <div className="modal-card" onClick={(e) => e.stopPropagation()}>
-            <h3 style={{ color: '#E5484D' }}>Hapus Keluarga?</h3>
-            <p className="modal-sub">
-              Kamu yakin mau hapus <b>{konfirmasiHapus.nama}</b>? Tindakan ini tidak bisa dibatalkan.
-            </p>
-            <div className="form-actions">
-              <button className="btn-cancel" onClick={() => setKonfirmasiHapus(null)}>Batal</button>
-              <button
-                className="btn-save"
-                style={{ background: 'linear-gradient(135deg, #E5484D, #c93940)' }}
-                onClick={konfirmasiHapusSekarang}
-              >
-                Ya, Hapus
-              </button>
+          {!loading && dataTampil.length === 0 && (
+            <div className="empty-state" style={{ gridColumn: '1 / -1' }}>
+              <div className="empty-state-icon">👪</div>
+              <h4>Belum ada data keluarga</h4>
+              <p>Klik "Tambah Anggota" untuk mulai menambahkan keluarga besar kamu.</p>
+              <Link to="/admin/anggota/tambah" className="btn-add">＋ Tambah Anggota</Link>
             </div>
-          </div>
+          )}
+
+          {dataTampil.map((k) => {
+            const s = statusLabel(k.status)
+            const inisial = k.nama.split(' ')[1] ? k.nama.split(' ')[1].slice(0, 2).toUpperCase() : 'KK'
+            return (
+              <div className="keluarga-card" key={k.id}>
+                <div className="kc-top">
+                  <div className="kc-avatar">{inisial}</div>
+                  <span className={`status-pill ${s.cls}`}>{s.text}</span>
+                </div>
+
+                <h3>{k.nama}</h3>
+                <p className="kc-ketua">Ketua: {k.ketua}</p>
+
+                <div className="kc-info">
+                  <div><span>Jumlah Anggota</span><b>{k.jumlah_anggota} orang</b></div>
+                  <div><span>No. HP</span><b>{k.no_hp || '-'}</b></div>
+                  <div><span>Alamat</span><b>{k.alamat || '-'}</b></div>
+                  <div><span>Terdaftar</span><b>{new Date(k.created_at).toLocaleDateString('id-ID')}</b></div>
+                </div>
+
+                <div className="kc-actions">
+                  <Link to={`/admin/anggota/${k.id}`} className="ac-btn" style={{ textDecoration: 'none', textAlign: 'center' }}>Detail</Link>
+                  <Link to={`/admin/anggota/edit/${k.id}`} className="ac-btn" style={{ textDecoration: 'none', textAlign: 'center' }}>Edit</Link>
+                  <Link to={`/admin/anggota/${k.id}`} className="ac-btn" style={{ textDecoration: 'none', textAlign: 'center' }}>Riwayat</Link>
+                  <a href={linkWhatsApp(k)} target="_blank" rel="noreferrer" className="ac-btn wa" style={{ textDecoration: 'none', textAlign: 'center' }}>WhatsApp</a>
+                </div>
+              </div>
+            )
+          })}
         </div>
-      )}
+      </div>
     </div>
   )
 }
