@@ -3,16 +3,13 @@
 # 💰 Family Finance
 ### Sistem Manajemen Keuangan Keluarga Berbasis Web
 
-Kelola keuangan keluarga menjadi lebih mudah, rapi, transparan, dan terorganisir dalam satu aplikasi.
+**Kelola keuangan keluarga lebih mudah, lebih rapi, dan lebih transparan dalam satu aplikasi digital.**
 
-![React](https://img.shields.io/badge/React-19-blue?style=for-the-badge&logo=react)
-![Vite](https://img.shields.io/badge/Vite-8-purple?style=for-the-badge&logo=vite)
-![Supabase](https://img.shields.io/badge/Supabase-Database-green?style=for-the-badge&logo=supabase)
-![Vercel](https://img.shields.io/badge/Vercel-Hosting-black?style=for-the-badge&logo=vercel)
-
-🌐 Live Demo
-
-https://family-finance-cyan-beta.vercel.app
+[![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-Family_Finance-blue?style=for-the-badge)](https://family-finance-cyan-beta.vercel.app)
+[![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react)](https://react.dev)
+[![Vite](https://img.shields.io/badge/Vite-7-646CFF?style=for-the-badge&logo=vite)](https://vitejs.dev)
+[![Supabase](https://img.shields.io/badge/Supabase-Database-3ECF8E?style=for-the-badge&logo=supabase)](https://supabase.com)
+[![Vercel](https://img.shields.io/badge/Deploy-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com)
 
 </div>
 
@@ -20,110 +17,112 @@ https://family-finance-cyan-beta.vercel.app
 
 # 📌 Tentang Family Finance
 
-Family Finance merupakan aplikasi berbasis web yang dirancang untuk membantu keluarga dalam mengelola keuangan secara digital. Aplikasi ini memungkinkan pencatatan pemasukan, pengeluaran, iuran keluarga, laporan keuangan, serta pengelolaan anggota keluarga dengan sistem yang mudah digunakan.
+**Family Finance** merupakan aplikasi web yang dirancang untuk membantu keluarga dalam mengelola keuangan secara digital. Aplikasi ini memudahkan pencatatan pemasukan, pengeluaran, pengelolaan anggota keluarga, jadwal kegiatan, pengingat pembayaran, hingga penyusunan laporan keuangan dalam satu dashboard yang modern dan mudah digunakan.
 
-Melalui aplikasi ini seluruh anggota keluarga dapat memantau kondisi keuangan secara transparan, sedangkan Admin memiliki akses penuh untuk mengelola seluruh data keuangan.
+> Tidak perlu lagi mencatat keuangan secara manual. Semua transaksi dan laporan dapat dikelola secara digital, lebih cepat, aman, dan transparan.
 
 ---
 
 # ✨ Fitur Utama
 
-## 👨‍💼 Admin
+### 👨‍💼 Admin
 
-- Dashboard Keuangan
-- Manajemen Anggota Keluarga
-- Tambah/Edit/Hapus Anggota
-- Kas Masuk
-- Kas Keluar
-- Jadwal Acara
-- Pengingat Pembayaran
-- Laporan Keuangan
-- Export PDF
-- Export Excel
-- Generate Pesan WhatsApp
-- Pengaturan Sistem
+- 🔐 Login Admin
+- 📊 Dashboard Keuangan
+- 👨‍👩‍👧 Manajemen Anggota Keluarga
+- 💰 Kas Masuk
+- 💸 Kas Keluar
+- 📅 Jadwal Acara
+- 🔔 Reminder Pembayaran
+- 📈 Laporan Keuangan
+- 📄 Export PDF
+- 📊 Export Excel
+- 💬 Generate Pesan WhatsApp
+- ⚙️ Pengaturan Sistem
+
+### 👤 Anggota
+
+- 🔐 Login Anggota
+- 📊 Dashboard
+- 👤 Profil Anggota
+- 💰 Melihat Riwayat Keuangan
+- 📅 Melihat Jadwal Acara
+- 📈 Melihat Laporan
 
 ---
 
-## 👤 Anggota
+# 🖥️ Screenshot
 
-- Dashboard
-- Melihat Profil
-- Melihat Kas
-- Melihat Jadwal Acara
-- Melihat Riwayat Keuangan
+| Login | Dashboard Admin |
+|---|---|
+| ![Login](public/images/login.png) | ![Dashboard Admin](public/images/dashboard-admin.png) |
+
+| Dashboard Anggota |
+|---|
+| ![Dashboard Anggota](public/images/dashboard-anggota.png) |
+
+> **Pastikan gambar disimpan pada folder `public/images` dengan nama yang sesuai agar dapat ditampilkan di GitHub.**
+
+---
+
+# 🛠️ Tech Stack
+
+| Teknologi | Kegunaan |
+|-----------|----------|
+| React 19 | Frontend Framework |
+| Vite | Build Tool |
+| Supabase | Database & Authentication |
+| React Router DOM | Routing |
+| Framer Motion | UI Animation |
+| Recharts | Grafik |
+| jsPDF | Export PDF |
+| XLSX | Export Excel |
+| html2canvas | Generate PDF |
+| Vercel | Hosting & Deployment |
 
 ---
 
 # 🔐 Akses Demo
 
+Gunakan akun berikut untuk mencoba aplikasi.
+
 | Role | Email | Password |
 |------|-------|----------|
-| 👨‍💼 Admin | `admin@familyfinance.com` | `admin123` |
-| 👤 Anggota | `ajeng@familyfinance.com` | `ajeng123` |
-
-> Akun di atas dapat digunakan untuk mencoba seluruh fitur aplikasi sesuai hak akses masing-masing.
+| 👨‍💼 **Admin** | `admin@familyfinance.com` | `admin123` |
+| 👤 **Anggota** | `ajeng@familyfinance.com` | `ajeng123` |
 
 ---
 
-# 🖥 Screenshot
+# 🚀 Cara Menjalankan Project
 
-Tambahkan screenshot berikut pada folder
-
-```
-public/images
-```
-
-Contoh:
-
-- Login
-- Dashboard Admin
-- Dashboard Anggota
-- Kas Masuk
-- Kas Keluar
-- Laporan
-- Jadwal Acara
-
----
-
-# 🛠 Tech Stack
-
-| Teknologi | Fungsi |
-|------------|-------------------------|
-| React 19 | Frontend |
-| Vite | Build Tool |
-| Supabase | Database & Authentication |
-| React Router DOM | Routing |
-| Framer Motion | Animasi |
-| Recharts | Grafik |
-| jsPDF | Export PDF |
-| XLSX | Export Excel |
-| html2canvas | Screenshot PDF |
-| Vercel | Deployment |
-
----
-
-# 🚀 Instalasi
-
-Clone repository
+### 1. Clone Repository
 
 ```bash
 git clone https://github.com/vickyagstn/Family-Finance.git
 ```
 
-Masuk folder
+### 2. Masuk Folder Project
 
 ```bash
 cd Family-Finance
 ```
 
-Install dependency
+### 3. Install Dependency
 
 ```bash
 npm install
 ```
 
-Jalankan project
+### 4. Buat Environment Variables
+
+Buat file `.env` kemudian isi:
+
+```env
+VITE_SUPABASE_URL=YOUR_SUPABASE_URL
+VITE_SUPABASE_ANON_KEY=YOUR_SUPABASE_ANON_KEY
+```
+
+### 5. Jalankan Project
 
 ```bash
 npm run dev
@@ -131,106 +130,57 @@ npm run dev
 
 ---
 
-# 🔑 Environment Variables
+# ☁️ Deploy
 
-Buat file
+Project ini di-deploy menggunakan **Vercel**.
 
-```
-.env
-```
+🌐 **Live Demo**
 
-Isi dengan
-
-```env
-VITE_SUPABASE_URL=YOUR_SUPABASE_URL
-
-VITE_SUPABASE_ANON_KEY=YOUR_SUPABASE_ANON_KEY
-```
-
----
-
-# 👥 Hak Akses
-
-## Admin
-
-✔ Dashboard
-
-✔ Kelola Anggota
-
-✔ Kas Masuk
-
-✔ Kas Keluar
-
-✔ Jadwal Acara
-
-✔ Pengingat
-
-✔ Laporan
-
-✔ Export PDF
-
-✔ Export Excel
-
-✔ Pengaturan
-
----
-
-## Anggota
-
-✔ Dashboard
-
-✔ Profil
-
-✔ Kas
-
-✔ Jadwal Acara
-
-✔ Riwayat Keuangan
+https://family-finance-cyan-beta.vercel.app
 
 ---
 
 # 📁 Struktur Project
 
-```
-src
+```text
+Family-Finance
 │
-├── components
-├── pages
-│   ├── admin
-│   └── anggota
-├── assets
-├── styles
-├── utils
-└── supabaseClient.js
+├── public
+│   └── images
+│       ├── login.png
+│       ├── dashboard-admin.png
+│       └── dashboard-anggota.png
+│
+├── src
+│   ├── components
+│   ├── pages
+│   ├── assets
+│   ├── hooks
+│   ├── services
+│   ├── utils
+│   └── App.jsx
+│
+├── package.json
+└── README.md
 ```
 
 ---
 
-# 📈 Roadmap
+# 🗺️ Roadmap
 
 - ✅ Login Multi Role
 - ✅ Dashboard Admin
 - ✅ Dashboard Anggota
 - ✅ Kas Masuk
 - ✅ Kas Keluar
-- ✅ Laporan
+- ✅ Laporan Keuangan
 - ✅ Export PDF
 - ✅ Export Excel
 - ✅ Jadwal Acara
-- ✅ Pengingat
-- 🔄 Notifikasi Email
-- 🔄 Notifikasi WhatsApp Otomatis
-- 🔄 Backup Database
-
----
-
-# ☁ Deploy
-
-Project di-deploy menggunakan
-
-**Vercel**
-
-https://family-finance-cyan-beta.vercel.app
+- ✅ Reminder Pembayaran
+- ⏳ Notifikasi WhatsApp Otomatis
+- ⏳ Backup Database
+- ⏳ Dark Mode
 
 ---
 
@@ -238,16 +188,14 @@ https://family-finance-cyan-beta.vercel.app
 
 **Vicky Agustine**
 
-GitHub
-
-https://github.com/vickyagstn
+GitHub: https://github.com/vickyagstn
 
 ---
 
 <div align="center">
 
-Made with ❤️ using React, Supabase & Vite
+Dibuat dengan ❤️ menggunakan **React, Supabase, dan Vite**
 
-⭐ Don't forget to Star this repository!
+⭐ Jangan lupa berikan **Star** jika repository ini bermanfaat.
 
 </div>
